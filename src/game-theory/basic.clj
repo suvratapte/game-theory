@@ -1,10 +1,18 @@
-(ns game)
+(ns game-theory.basic)
 
 (def initial-state
   {:first-player []
    :second-player []
    :score {:first-player 0
            :second-player 0}})
+
+
+(defn- grudger
+  [current-state player-key opponent-key]
+  (let [opponent-moves (opponent-key current-state)]
+    (if (some #(= :de %) opponent-moves)
+      :de
+      :co)))
 
 
 (defn- not-so-simple
