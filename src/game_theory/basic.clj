@@ -38,6 +38,14 @@
     (or (last opponent-moves) :co)))
 
 
+(defn- joss
+  [current-state player-key opponent-key]
+  (let [opponent-moves (opponent-key current-state)]
+    (if (> (rand-int 10) 2)
+      :de
+      (or (last opponent-moves) :co))))
+
+
 (defn- compute-state
   [current-state first-player-move second-player-move]
   (let [state-with-updated-moves
@@ -51,10 +59,10 @@
       (assoc state-with-updated-moves
              :score {:first-player (-> current-state
                                        :score :first-player
-                                       (+ 10))
+                                       (+ 3))
                      :second-player (-> current-state
                                         :score :second-player
-                                        (+ 10))})
+                                        (+ 3))})
 
       (and (= :de first-player-move)
            (= :de second-player-move))
