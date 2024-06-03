@@ -54,6 +54,7 @@
          :second-player (conj (:second-player current-state)
                               second-player-move)}]
     (cond
+      ;; Both cooperate
       (and (= :co first-player-move)
            (= :co second-player-move))
       (assoc state-with-updated-moves
@@ -64,16 +65,18 @@
                                         :score :second-player
                                         (+ 3))})
 
+      ;; Both defect
       (and (= :de first-player-move)
            (= :de second-player-move))
       (assoc state-with-updated-moves
              :score {:first-player (-> current-state
                                        :score :first-player
-                                       (+ 5))
+                                       (+ 1))
                      :second-player (-> current-state
                                         :score :second-player
-                                        (+ 5))})
+                                        (+ 1))})
 
+      ;; One cooperatiion one defection
       (and (= :co first-player-move)
            (= :de second-player-move))
       (assoc state-with-updated-moves
@@ -82,14 +85,14 @@
                                        (+ 0))
                      :second-player (-> current-state
                                         :score :second-player
-                                        (+ 8))})
+                                        (+ 5))})
 
       (and (= :de first-player-move)
            (= :co second-player-move))
       (assoc state-with-updated-moves
              :score {:first-player (-> current-state
                                        :score :first-player
-                                       (+ 8))
+                                       (+ 5))
                      :second-player (-> current-state
                                         :score :second-player
                                         (+ 0))}))))
