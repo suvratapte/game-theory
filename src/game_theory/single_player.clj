@@ -1,4 +1,4 @@
-(ns game-theory.basic)
+(ns game-theory.single-player)
 
 (def initial-state
   {:first-player-moves []
