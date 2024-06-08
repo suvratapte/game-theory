@@ -103,58 +103,6 @@
       [5 0]))
 
 
-(defn- compute-state
-  [current-state first-player-move second-player-move]
-  (let [state-with-updated-moves
-        {:first-player (conj (:first-player current-state)
-                             first-player-move)
-         :second-player (conj (:second-player current-state)
-                              second-player-move)}]
-    (cond
-      ;; Both cooperate
-      (and (= :co first-player-move)
-           (= :co second-player-move))
-      (assoc state-with-updated-moves
-             :score {:first-player (-> current-state
-                                       :score :first-player
-                                       (+ 3))
-                     :second-player (-> current-state
-                                        :score :second-player
-                                        (+ 3))})
-
-      ;; Both defect
-      (and (= :de first-player-move)
-           (= :de second-player-move))
-      (assoc state-with-updated-moves
-             :score {:first-player (-> current-state
-                                       :score :first-player
-                                       (+ 1))
-                     :second-player (-> current-state
-                                        :score :second-player
-                                        (+ 1))})
-
-      ;; One cooperatiion one defection
-      (and (= :co first-player-move)
-           (= :de second-player-move))
-      (assoc state-with-updated-moves
-             :score {:first-player (-> current-state
-                                       :score :first-player
-                                       (+ 0))
-                     :second-player (-> current-state
-                                        :score :second-player
-                                        (+ 5))})
-
-      (and (= :de first-player-move)
-           (= :co second-player-move))
-      (assoc state-with-updated-moves
-             :score {:first-player (-> current-state
-                                       :score :first-player
-                                       (+ 5))
-                     :second-player (-> current-state
-                                        :score :second-player
-                                        (+ 0))}))))
-
-
 (defn- simulate-round-for-player
   [state player opponents]
   (reduce (fn [state opponent]
