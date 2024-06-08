@@ -59,6 +59,18 @@
   (or (last opponent-moves) :co))
 
 
+(defn- tit-for-two-tats
+  [player-moves opponent-moves]
+  (let [last-move (last opponent-moves)
+        second-last-move (-> opponent-moves
+                             drop-last
+                             last)]
+    (if (and (= last-move :de)
+             (= second-last-move :de))
+      :de
+      :co)))
+
+
 (defn- joss
   [player-moves opponent-moves]
   (if (> (rand-int 10) 2)
@@ -205,8 +217,11 @@
 (comment
   (-> 100
       (simulate-game {:tit-for-tat tit-for-tat
+                      :tit-for-two-tats tit-for-two-tats
                       :grudger grudger
                       :joss joss
                       :simple simple
-                      :modi-ji modi-ji})
+                      :modi-ji modi-ji
+                      :not-so-simple not-so-simple
+                      :devil devil})
       (select-keys [:score :master-score])))
